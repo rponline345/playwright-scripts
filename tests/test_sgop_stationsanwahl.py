@@ -15,21 +15,28 @@ def test_sgop_stationsanwahl(page: Page) -> None:
     
 
     # Startseite / Login
-    page.goto("http://core.test.sgop.cloud", wait_until="domcontentloaded")
-
-    # Suche / Station auswählen
-    search_toggle = page.get_by_role("button", name=re.compile(r"(suche|search)", re.I)).first
-    expect(search_toggle).to_be_visible(timeout=20_000)
-    search_toggle.click()
-
-    search_input = page.get_by_placeholder(re.compile(r"(suche|search)", re.I)).first
-    expect(search_input).to_be_visible(timeout=20_000)
-    expect(search_input).to_be_editable(timeout=20_000)
-    search_input.fill("Station 103")
+    page.goto("https://core.test.sgop.cloud")
     
-    page.get_by_text("Station 103 - Aldi (cv86646)").click()
+    page.get_by_role("textbox", name="Username or email").fill(username)
+    page.get_by_role("textbox", name="Username or email").press("Tab")
+    page.get_by_role("textbox", name="Password").click()
+    page.get_by_role("textbox", name="Password").fill(password)
+    page.get_by_role("button", name="Sign In").click()
+    page.wait_for_timeout(15000) # 15 Sekunden
+    page.get_by_role("textbox", name="Suche...").click()
+    page.wait_for_timeout(15000) # 15 Sekunden
+    page.get_by_role("textbox", name="Suche...").fill("Station 103")
+    page.wait_for_timeout(15000) # 15 Sekunden
+    page.get_by_text("Station 103 - Aldi (cv86646)•").click()
+    page.wait_for_timeout(10000) # 10 Sekunden
+    page.get_by_role("button", name="Detailansicht").click()
+    
 
     # Erwartung + Aktion
-    detail_button = page.get_by_role("button", name="Detailansicht")
-    expect(detail_button).to_be_visible()
-    detail_button.click()
+    #detail_button = page.get_by_role("button", name="Detailansicht")
+    #expect(detail_button).to_be_visible()
+    #detail_button.click()
+
+    # ---------------------
+    page.wait_for_timeout(5000) # 5 Sekunden
+    page.close()
