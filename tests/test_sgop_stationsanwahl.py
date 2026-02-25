@@ -3,10 +3,8 @@ from playwright.sync_api import Page, expect
 
 def test_sgop_stationsanwahl(page: Page) -> None:
     # Timeouts für langsame Login-/Redirect-Flows
-    page.set_default_timeout(60_000)
-    page.set_default_navigation_timeout(120_000)
-
-
+    page.set_default_timeout(300_000)
+    page.set_default_navigation_timeout(600_000)
 
     username = os.getenv("SGOP_USER")
     password = os.getenv("SGOP_PASSWORD")
