@@ -7,8 +7,8 @@ def test_sgop_stationsanwahl(page: Page) -> None:
     page.set_default_timeout(150_000)
     page.set_default_navigation_timeout(300_000)
 
-    username = "test-admin" # os.getenv("SGOP_USER")
-    password = "5H~~9*#6f-2.014D|u~b873l}K<LxYoR" # os.getenv("SGOP_PASSWORD")
+    username = os.getenv("SGOP_USER")
+    password = os.getenv("SGOP_PASSWORD")
 
     assert username, "Umgebungsvariable SGOP_USER fehlt"
     assert password, "Umgebungsvariable SGOP_PASSWORD fehlt"
@@ -18,7 +18,7 @@ def test_sgop_stationsanwahl(page: Page) -> None:
     page.goto("https://core.test.sgop.cloud")
     
     print("SGOP_USER gesetzt:", username)
-    print("SGOP_PASSWORD gesetzt:", password)
+    print("SGOP_PASSWORD gesetzt:", bool(password))
     
     page.get_by_role("textbox", name="Username or email").fill(username)
     page.get_by_role("textbox", name="Username or email").press("Tab")
