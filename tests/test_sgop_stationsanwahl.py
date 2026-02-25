@@ -17,6 +17,9 @@ def test_sgop_stationsanwahl(page: Page) -> None:
     # Startseite / Login
     page.goto("https://core.test.sgop.cloud")
     
+    print("SGOP_USER gesetzt:", username)
+    print("SGOP_PASSWORD gesetzt:", password)
+    
     page.get_by_role("textbox", name="Username or email").fill(username)
     page.get_by_role("textbox", name="Username or email").press("Tab")
     page.get_by_role("textbox", name="Password").click()
