@@ -22,7 +22,7 @@ def test_sgop_stationsanwahl(page: Page) -> None:
     
 
     # Suche / Station auswählen
-    page.locator("div").filter(has_text="search").nth(2).click()
+    page.get_by_role("textbox", name="Suche...").click()
     page.get_by_role("textbox", name="Suche...").fill("Station 103")
     page.get_by_text("Station 103 - Aldi (cv86646)").click()
 
