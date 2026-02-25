@@ -4,11 +4,11 @@ from playwright.sync_api import Page, expect
 
 def test_sgop_stationsanwahl(page: Page) -> None:
     # Timeouts für langsame Login-/Redirect-Flows
-    page.set_default_timeout(300_000)
-    page.set_default_navigation_timeout(600_000)
+    page.set_default_timeout(150_000)
+    page.set_default_navigation_timeout(300_000)
 
-    username = os.getenv("SGOP_USER")
-    password = os.getenv("SGOP_PASSWORD")
+    username = "test-admin" # os.getenv("SGOP_USER")
+    password = "5H~~9*#6f-2.014D|u~b873l}K<LxYoR" # os.getenv("SGOP_PASSWORD")
 
     assert username, "Umgebungsvariable SGOP_USER fehlt"
     assert password, "Umgebungsvariable SGOP_PASSWORD fehlt"
@@ -26,6 +26,11 @@ def test_sgop_stationsanwahl(page: Page) -> None:
     page.get_by_role("textbox", name="Password").fill(password)
     page.get_by_role("button", name="Sign In").click()
     page.wait_for_timeout(15000) # 15 Sekunden
+    
+    print("URL nach goto:", page.url)
+    assert "oidc.sgop.cloud" not in page.url, f"Noch auf OIDC-Loginseite: {page.url}"
+    
+    
     page.get_by_role("textbox", name="Suche...").click()
     page.wait_for_timeout(15000) # 15 Sekunden
     page.get_by_role("textbox", name="Suche...").fill("Station 103")
